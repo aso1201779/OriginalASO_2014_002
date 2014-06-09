@@ -25,8 +25,10 @@ public final class R {
         public static final int main=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f080008;
+        public static final int action_settings=0x7f08000a;
+        public static final int btnBack=0x7f080009;
         public static final int btnCheak=0x7f080005;
+        public static final int btnDelete=0x7f080008;
         public static final int btnInsert=0x7f080002;
         public static final int btnMainte=0x7f080003;
         public static final int editHitokoto=0x7f080000;

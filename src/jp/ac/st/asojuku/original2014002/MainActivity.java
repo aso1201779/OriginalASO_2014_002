@@ -38,12 +38,14 @@ public class MainActivity extends Activity implements View.OnClickListener{
 			case R.id.btnInsert:
 				EditText etv = (EditText)findViewById(R.id.editHitokoto);
 				String inputMsg = etv.getText().toString();
-
+				break;
 
 			case R.id.btnMainte:
 				intent = new Intent(MainActivity.this, MainteActivity.class);
+				break;
 			case R.id.btnCheak:
 				intent = new Intent(MainActivity.this, HitokotoActivity.class);
+				break;
 
 		}
 		startActivity(intent);
