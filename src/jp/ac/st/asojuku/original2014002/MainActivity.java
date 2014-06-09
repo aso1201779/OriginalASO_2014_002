@@ -33,22 +33,20 @@ public class MainActivity extends Activity implements View.OnClickListener{
 	@Override
 	public void onClick(View v) {
 		// TODO 自動生成されたメソッド・スタブ
+		Intent intent = null;
 		switch(v.getId()){
-			Intent intent = null;
 			case R.id.btnInsert:
 				EditText etv = (EditText)findViewById(R.id.editHitokoto);
 				String inputMsg = etv.getText().toString();
 
 
 			case R.id.btnMainte:
-				intent = new Intent(MainAvtivity.this,MainteActivity.class);
-				startActivity(intent);
-
+				intent = new Intent(MainActivity.this, MainteActivity.class);
 			case R.id.btnCheak:
-				intent = new Intent(MainAvtivity.this,HitokotoActivity.class);
-				startActivity(intent);
+				intent = new Intent(MainActivity.this, HitokotoActivity.class);
 
 		}
+		startActivity(intent);
 	}
 
 	@Override
