@@ -54,10 +54,10 @@ public class MainActivity extends Activity implements View.OnClickListener{
 		switch(v.getId()){
 			case R.id.btnInsert://登録ボタン
 				//エディットテキストからの内容情報を取り出す
-				EditText etv = (EditText)findViewById(R.id.editHitokoto);
+				EditText etv = (EditText)findViewById(R.id.edtMsg);
 				String inputMsg = etv.getText().toString();
 
-				//inputMsgがnullでない、かつ、からでない場合のみif文内を実行
+				//inputMsgがnullでない、かつ、空でない場合のみif文内を実行
 				if(inputMsg != null && !inputMsg.isEmpty()){
 					//MySQLiteOpenHelperのインサートメソッドを呼び出し
 					helper.insertHitokoto(sdb, inputMsg);

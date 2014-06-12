@@ -9,7 +9,7 @@
     tools:context=".MainActivity" >
 
     <EditText
-        android:id="@+id/editHitokoto"
+        android:id="@+id/edtMsg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView2"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/btnMainte"
         android:layout_alignBottom="@+id/btnMainte"
-        android:layout_alignRight="@+id/editHitokoto"
+        android:layout_alignRight="@+id/edtMsg"
         android:text="登録！" />
 
     <TextView
@@ -42,8 +42,8 @@
         android:id="@+id/btnMainte"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/editHitokoto"
-        android:layout_below="@+id/editHitokoto"
+        android:layout_alignLeft="@+id/edtMsg"
+        android:layout_below="@+id/edtMsg"
         android:layout_marginTop="63dp"
         android:text="メンテ" />
 

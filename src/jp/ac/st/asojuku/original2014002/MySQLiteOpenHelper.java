@@ -17,7 +17,8 @@ public MySQLiteOpenHelper(Context context){
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO 自動生成されたメソッド・スタブ
-		db.execSQL("creata table if not exists"+"Hitokoto(_id integer primary key autoincrement not null , phrase text)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS " +
+				"Hitokoto ( _id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL , phrase TEXT)");
 	}
 
 	@Override
@@ -59,7 +60,7 @@ public MySQLiteOpenHelper(Context context){
 
 		String rtString = null;
 
-		String sqlstr = "select _id, phrase from Hitokoto order by random();";
+		String sqlstr = "SELECT _id, phrase FROM Hitokoto ORDER BY RANDOM();";
 			try{
 				//トランザクション開始
 				SQLiteCursor cursor = (SQLiteCursor)db.rawQuery(sqlstr,null);
@@ -69,6 +70,7 @@ public MySQLiteOpenHelper(Context context){
 					rtString = cursor.getString(1);
 				}
 				cursor.close();
+				
 			}catch(SQLException e){
 				Log.e("ERROR",e.toString());
 			}finally{
