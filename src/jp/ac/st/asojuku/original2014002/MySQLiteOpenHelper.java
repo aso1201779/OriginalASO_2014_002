@@ -70,7 +70,7 @@ public MySQLiteOpenHelper(Context context){
 					rtString = cursor.getString(1);
 				}
 				cursor.close();
-				
+
 			}catch(SQLException e){
 				Log.e("ERROR",e.toString());
 			}finally{
@@ -78,5 +78,49 @@ public MySQLiteOpenHelper(Context context){
 			}
 		return rtString;
 	}
+	/**
+	 * Hitokotoテーブルからデータをすべて取得
+	 * @param
+	 * @return
+	 */
+	public SQLiteCursor selectHitokotoList(SQLiteDatabase db){
+		SQLiteCursor cursor = null;
+		String sqlstr ="SELECT _id,phrase FROM Hitokoto ORDER BY _id;";
+		try{
+			//トランザクション開始
+			cursor = (SQLiteCursor)db.rawQuery(sqlstr, null);
+			if(cursor.getCount()!=0){
+				//カーソル開始位置を先頭にする
+				cursor.moveToFirst();
+			}
+			//cursorは呼び出し元へ返すからここではcloseしない
+			//cursor.close();
+
+		}catch(SQLException e){
+			Log.e("ERROR",e.toString());
+		}finally{
+
+		}
+		return cursor;
+	}
+	/**
+	 * Hitokoto表から引数(id)で指定した値とカラム「_id」の値が等しいレコードを削除
+	 */
+	public void deleteHitokoto(SQLiteDatabase db, int id){
+		String sqlstr = "DELETE FROM Hitokoto where _id = " + id + " ;";
+		try{
+			//トランザクション開始
+			db.beginTransaction();
+			db.execSQL(sqlstr);
+			//トランザクション成功
+			db.setTransactionSuccessful();
+		}catch(SQLException e){
+			Log.e("ERROR", e.toString());
+		}finally{
+			//トランザクション終了
+			db.endTransaction();
+		}
+	}
+
 
 }
