@@ -121,6 +121,4 @@ public MySQLiteOpenHelper(Context context){
 			db.endTransaction();
 		}
 	}
-
-
 }

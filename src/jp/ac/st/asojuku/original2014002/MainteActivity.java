@@ -2,7 +2,6 @@
 package jp.ac.st.asojuku.original2014002;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.database.sqlite.SQLiteCursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -13,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class MainteActivity extends Activity implements View.OnClickListener,AdapterView.OnItemClickListener{
 
@@ -51,23 +51,52 @@ public class MainteActivity extends Activity implements View.OnClickListener,Ada
 
 		//ListViewにDBの値をセット
 		this.setDBValuetoList(lstHitokoto);
+
 	}
 
 	@Override
 	public void onClick(View v) {
 		// TODO 自動生成されたメソッド・スタブ
-		Intent intent = null;
+
 		switch(v.getId()){
-			case R.id.btnDelete:
-
+			case R.id.btnDelete: //削除ボタンが押された
+				//選択行があれば
+				if(this.selectedID != -1){
+					this.deleteFromHitokoto(this.selectedID);
+					ListView lstHitokoto = (ListView)findViewById(R.id.lstHitokoto);
+					//ListViewにDBをセット
+					this.setDBValuetoList(lstHitokoto);
+					//選択行を忘れる
+					this.selectedID = -1;
+					this.lastPosition = -1;
+				}else{
+					//なければ、トースト(簡易メッセージ)を表示
+					Toast.makeText(MainteActivity.this, "削除する行を選んでください", Toast.LENGTH_SHORT).show();
+				}
 				break;
 
-			case R.id.btnBack:
-				intent = new Intent(MainteActivity.this, MainActivity.class);
+			case R.id.btnBack://戻るボタンが押された
+				finish();
 				break;
-
 		}
-		startActivity(intent);
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		// TODO 自動生成されたメソッド・スタブ
+		//前に選択中の行がれば、背景を透明にする
+		if(this.selectedID != -1){
+			parent.getChildAt(this.lastPosition).setBackgroundColor(0);
+		}
+		//選択中の行の背景色をグレーにする
+		view.setBackgroundColor(android.graphics.Color.YELLOW);
+
+		//選択行のレコードを指し示すカーソルを取得
+		SQLiteCursor cursor = (SQLiteCursor)parent.getItemAtPosition(position);
+		//カーソルのレコードか、「_id」の値を取得して記憶
+		this.selectedID = cursor.getInt(cursor.getColumnIndex("_id"));
+		//何行目を選択したかも記憶
+		this.lastPosition = position;
 	}
 
 	private void setDBValuetoList(ListView lstHitokoto){
@@ -99,6 +128,21 @@ public class MainteActivity extends Activity implements View.OnClickListener,Ada
 
 		//アダプターを指定します
 		lstHitokoto.setAdapter(adapter);
+	}
+
+	private void deleteFromHitokoto(int id){
+		//クラスのフィールド変数がNULLなら、データベース空間オープン
+		if(sdb == null){
+			helper = new MySQLiteOpenHelper(getApplicationContext());
+		}
+		try{
+			sdb = helper.getWritableDatabase();
+		}catch(SQLiteException e){
+			//異常終了
+			Log.e("ERROR",e.toString());
+		}
+		//MySQLiteOpenHelperにdelete文を実行させる
+		this.helper.deleteHitokoto(sdb, id);
 	}
 
 }
